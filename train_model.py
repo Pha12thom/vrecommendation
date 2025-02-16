@@ -1,29 +1,54 @@
 import pandas as pd
 import numpy as np
-from sklearn.neighbors import NearestNeighbors
-import joblib
+import pickle
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import LabelEncoder
 
-# Load vehicle dataset
-df = pd.read_csv("vehicle.csv")
+# Load dataset
+data = pd.read_csv("vehicles.csv")
 
-# Encode categorical values
-size_mapping = {"Sedan": 0, "SUV": 1, "Hatchback": 2}
-usage_mapping = {"Daily": 0, "Travel": 1, "City": 2}
-location_mapping = {"Nairobi": 0, "Mombasa": 1, "Kisumu": 2}
-time_mapping = {"Weekdays": 0, "Weekends": 1, "Anytime": 2}
+# Label encoding for categorical columns
+size_encoder = LabelEncoder()
+usage_encoder = LabelEncoder()
+location_encoder = LabelEncoder()
+time_encoder = LabelEncoder()
 
-df["size"] = df["size"].map(size_mapping)
-df["usage"] = df["usage"].map(usage_mapping)
-df["location"] = df["location"].map(location_mapping)
-df["time_of_usage"] = df["time_of_usage"].map(time_mapping)
+data["size"] = size_encoder.fit_transform(data["size"])
+data["usage"] = usage_encoder.fit_transform(data["usage"])
+data["location"] = location_encoder.fit_transform(data["location"])
+data["time_of_usage"] = time_encoder.fit_transform(data["time_of_usage"])
 
-# Select features
-X = df[["price", "size", "usage", "location", "time_of_usage"]]
+# Assign unique indices to each vehicle
+data["vehicle_index"] = range(len(data))
 
-# Train KNN model
-knn = NearestNeighbors(n_neighbors=3, metric='euclidean')
-knn.fit(X)
+# Split data
+X = data.drop(columns=["vehicle_name", "vehicle_index"])  # Remove text columns
+y = data["vehicle_index"]
 
-# Save the trained model
-joblib.dump(knn, "vehicle_recommendation_model.pkl")
-print("Model trained and saved successfully!")
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train model
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# Save model and encoders
+with open("model.pkl", "wb") as f:
+    pickle.dump(model, f)
+
+with open("size_encoder.pkl", "wb") as f:
+    pickle.dump(size_encoder, f)
+
+with open("usage_encoder.pkl", "wb") as f:
+    pickle.dump(usage_encoder, f)
+
+with open("location_encoder.pkl", "wb") as f:
+    pickle.dump(location_encoder, f)
+
+with open("time_encoder.pkl", "wb") as f:
+    pickle.dump(time_encoder, f)
+
+# Save processed data for use in API
+data.to_csv("vehicle.csv", index=False)
+
+print("Model and encoders saved successfully!")

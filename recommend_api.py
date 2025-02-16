@@ -1,57 +1,62 @@
-from flask import Flask, request, jsonify
-import joblib
+import pickle
+import numpy as np
 import pandas as pd
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# Load the trained model
-model = joblib.load("vehicle_recommendation_model.pkl")
+# Load trained model
+with open("model.pkl", "rb") as f:
+    model = pickle.load(f)
 
-# Load vehicle data
-df = pd.read_csv("vehicle.csv")
+# Load encoders
+with open("size_encoder.pkl", "rb") as f:
+    size_encoder = pickle.load(f)
 
-# Define encoding mappings
-size_mapping = {"Sedan": 0, "SUV": 1, "Hatchback": 2}
-usage_mapping = {"Daily": 0, "Travel": 1, "City": 2}
-location_mapping = {"Nairobi": 0, "Mombasa": 1, "Kisumu": 2}
-time_mapping = {"Weekdays": 0, "Weekends": 1, "Anytime": 2}
+with open("usage_encoder.pkl", "rb") as f:
+    usage_encoder = pickle.load(f)
 
-# Reverse mappings (for decoding)
-reverse_size_mapping = {v: k for k, v in size_mapping.items()}
-reverse_usage_mapping = {v: k for k, v in usage_mapping.items()}
-reverse_location_mapping = {v: k for k, v in location_mapping.items()}
-reverse_time_mapping = {v: k for k, v in time_mapping.items()}
+with open("location_encoder.pkl", "rb") as f:
+    location_encoder = pickle.load(f)
+
+with open("time_encoder.pkl", "rb") as f:
+    time_encoder = pickle.load(f)
+
+# Load processed vehicle database
+vehicles = pd.read_csv("vehicle.csv")
+
+def safe_encode(encoder, value):
+    """Encodes categorical values safely, returning -1 if not found."""
+    try:
+        return encoder.transform([value])[0]
+    except ValueError:
+        return -1  # If category is unknown, assign -1
 
 @app.route("/recommend", methods=["POST"])
 def recommend():
-    data = request.json
-
     try:
+        data = request.get_json()
+
+        # Encode user input
         user_input = [[
             data["price"],
-            size_mapping.get(data["size"], -1),  # Handle missing mappings
-            usage_mapping.get(data["usage"], -1),
-            location_mapping.get(data["location"], -1),
-            time_mapping.get(data["time_of_usage"], -1)
+            safe_encode(size_encoder, data["size"]),
+            safe_encode(usage_encoder, data["usage"]),
+            safe_encode(location_encoder, data["location"]),
+            safe_encode(time_encoder, data["time_of_usage"])
         ]]
 
-        distances, indices = model.kneighbors(user_input)
-        recommended_vehicles = df.iloc[indices[0]].copy()
+        # Convert to NumPy array and predict
+        user_input = np.array(user_input)
+        predicted_indices = model.predict(user_input)
 
-        # Convert numerical values back to readable labels (handling NaN)
-        recommended_vehicles["size"] = recommended_vehicles["size"].map(reverse_size_mapping).fillna("Unknown")
-        recommended_vehicles["usage"] = recommended_vehicles["usage"].map(reverse_usage_mapping).fillna("Unknown")
-        recommended_vehicles["location"] = recommended_vehicles["location"].map(reverse_location_mapping).fillna("Unknown")
-        recommended_vehicles["time_of_usage"] = recommended_vehicles["time_of_usage"].map(reverse_time_mapping).fillna("Unknown")
+        # Retrieve recommended vehicles
+        recommended_vehicles = vehicles.iloc[predicted_indices].to_dict(orient="records")
 
-        return jsonify({
-            "recommended_vehicles": recommended_vehicles[[
-                "vehicle_name", "price", "size", "usage", "location", "time_of_usage"
-            ]].to_dict(orient="records")
-        })
+        return jsonify({"recommended_vehicles": recommended_vehicles})
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(port=5000)
+    app.run(debug=True)
