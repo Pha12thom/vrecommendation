@@ -1,0 +1,10 @@
+POST http://127.0.0.1:5000/recommend
+Content-Type: Application/json
+
+{
+    "price": 6000,
+    "size": "SUV", 
+    "usage": "Daily", 
+    "location": "Nairobi", 
+    "time_of_usage": "Anytime"
+    }
