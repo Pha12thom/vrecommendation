@@ -1,6 +1,6 @@
-vehicle_name,price,size,usage,location,time_of_usage
-Toyota Corolla,5000,Sedan,Daily,Nairobi,Weekdays
-Nissan X-Trail,7000,SUV,Travel,Mombasa,Weekends
-Subaru Forester,6000,SUV,Daily,Kisumu,Anytime
-Mazda CX-5,7500,SUV,Daily,Nairobi,Anytime
-Toyota Vitz,4000,Hatchback,City,Nairobi,Weekdays
+vehicle_name,price,size,usage,location,time_of_usage,vehicle_index
+Toyota Corolla,5000,2,1,2,1,0
+Nissan X-Trail,7000,1,2,1,2,1
+Subaru Forester,6000,1,1,0,0,2
+Mazda CX-5,7500,1,1,2,0,3
+Toyota Vitz,4000,0,0,2,1,4

@@ -6,7 +6,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import LabelEncoder
 
 # Load dataset
-data = pd.read_csv("vehicles.csv")
+data = pd.read_csv("vehicle.csv")
 
 # Label encoding for categorical columns
 size_encoder = LabelEncoder()
