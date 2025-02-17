@@ -1,12 +1,11 @@
-### Send a recommendation request
-POST http://127.0.0.1:5000/recommend
+POST http://127.0.0.1:5000/recommend 
 Content-Type: application/json
 
-{
-  "Year": 2019,
-  "Price": 18000,
-  "Mileage": 25000,
-  "Color": "Black",
-  "Transmission": "Manual",
-  "Type": "Sedan"
-}
+    {
+    "Year": 2020, 
+    "Price": 35000,
+    "Mileage": 15000, 
+    "Color": "Blue", 
+    "Transmission": "Automatic", 
+    "Type": "Truck"
+    }
