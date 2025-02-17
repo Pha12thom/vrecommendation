@@ -1,0 +1,32 @@
+Make,Model,Year,Price,Mileage,Color,Transmission,Type
+Toyota,Corolla,2018,15000,30000,White,Automatic,Sedan
+Honda,Civic,2019,18000,25000,Black,Manual,Sedan
+Ford,F-150,2020,35000,15000,Blue,Automatic,Truck
+Chevrolet,Malibu,2017,14000,40000,Red,Automatic,Sedan
+Nissan,Rogue,2018,20000,20000,Gray,Automatic,SUV
+BMW,X5,2020,50000,10000,White,Automatic,SUV
+Audi,A4,2019,32000,22000,Black,Automatic,Sedan
+Mercedes-Benz,C-Class,2020,42000,18000,Silver,Automatic,Sedan
+Hyundai,Elantra,2021,19000,12000,Blue,Automatic,Sedan
+Subaru,Forester,2019,25000,30000,Green,Automatic,SUV
+Kia,Sorento,2020,28000,22000,Black,Automatic,SUV
+Tesla,Model 3,2021,45000,5000,White,Automatic,Sedan
+Jeep,Wrangler,2018,32000,40000,Red,Manual,SUV
+Volkswagen,Passat,2017,17000,35000,Silver,Automatic,Sedan
+Mazda,CX-5,2020,27000,18000,Gray,Automatic,SUV
+Lexus,RX 350,2019,46000,15000,Black,Automatic,SUV
+Ford,Escape,2021,26000,10000,Blue,Automatic,SUV
+Honda,Accord,2019,22000,25000,White,Automatic,Sedan
+Chevrolet,Tahoe,2018,38000,35000,Black,Automatic,SUV
+Toyota,RAV4,2020,31000,15000,Gray,Automatic,SUV
+Nissan,Altima,2017,16000,40000,Blue,Automatic,Sedan
+Dodge,Charger,2019,29000,22000,Red,Automatic,Sedan
+Tesla,Model X,2020,85000,10000,White,Automatic,SUV
+BMW,3 Series,2018,35000,25000,Black,Automatic,Sedan
+Mercedes-Benz,GLC,2020,52000,12000,Silver,Automatic,SUV
+Volkswagen,Tiguan,2021,30000,8000,Gray,Automatic,SUV
+Subaru,Outback,2019,27000,30000,Green,Automatic,SUV
+Kia,Optima,2017,15000,45000,White,Automatic,Sedan
+Jeep,Grand Cherokee,2020,40000,20000,Black,Automatic,SUV
+Mazda,6,2018,22000,28000,Blue,Automatic,Sedan
+Lexus,ES 350,2019,39000,16000,Silver,Automatic,Sedan
