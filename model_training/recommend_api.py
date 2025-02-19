@@ -3,10 +3,10 @@ import pandas as pd
 from flask import Flask, request, jsonify
 
 # Load the trained model and encoders
-with open("vehicle_model.pkl", "rb") as f:
+with open("pkl/vehicle_model.pkl", "rb") as f:
     model = pickle.load(f)
 
-with open("encoders.pkl", "rb") as f:
+with open("pkl/encoders.pkl", "rb") as f:
     encoders = pickle.load(f)
 
 # Load the original dataset to retrieve vehicle details

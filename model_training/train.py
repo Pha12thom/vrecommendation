@@ -25,10 +25,10 @@ model = RandomForestClassifier(n_estimators=100, random_state=42)
 model.fit(X_train, y_train)
 
 # Save the model and encoders
-with open("vehicle_model.pkl", "wb") as f:
+with open("./pkl/vehicle_model.pkl", "wb") as f:
     pickle.dump(model, f)
 
-with open("encoders.pkl", "wb") as f:
+with open("./pkl/encoders.pkl", "wb") as f:
     pickle.dump(encoders, f)
 
 print("Model and encoders saved successfully!")

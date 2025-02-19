@@ -1,0 +1,13 @@
+GET http://127.0.0.1:5000/
+Content-Type: application/json
+
+{
+
+}
+
+post http://127.0.0.1:5000/recommend
+Content-Type: application/json
+
+{
+    
+}
