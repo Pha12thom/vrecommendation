@@ -11,13 +11,13 @@ public class CaesarCipherUI {
             char ch = text.charAt(i);
 
             if (Character.isLetter(ch)) {
-                // Shift letters backward by 3 with wrap-around
+                // Shift letters backward by 6 with wrap-around
                 char base = Character.isUpperCase(ch) ? 'A' : 'a';
-                char encryptedChar = (char) ((ch - base - 3 + 26) % 26 + base);
+                char encryptedChar = (char) ((ch - base - 6 + 26) % 26 + base);
                 result.append(encryptedChar);
             } else if (Character.isDigit(ch)) {
-                // Shift numbers backward by 3 with wrap-around
-                char encryptedDigit = (char) ((ch - '0' - 3 + 10) % 10 + '0');
+                // Shift numbers backward by 6 with wrap-around
+                char encryptedDigit = (char) ((ch - '0' - 6 + 10) % 10 + '0');
                 result.append(encryptedDigit);
             } else {
                 result.append(ch); // Keep special characters unchanged
@@ -28,7 +28,7 @@ public class CaesarCipherUI {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Caesar Cipher Encryption (3 Shift)");
+        JFrame frame = new JFrame("Caesar Cipher Encryption (6 Shift)");
         frame.setSize(400, 200);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
